@@ -14,7 +14,12 @@ server.post('/sign-up', (req, res) => {
 })
 
 server.post('/tweets', (req, res) => {
-    tweets.push({...req.body, avatar: user.avatar});
+    if (tweets.length < 10) {
+        tweets.unshift({...req.body, avatar: user.avatar});
+    } else {
+        tweets.pop();
+        tweets.unshift({...req.body, avatar: user.avatar});
+    }
     res.send("OK")
 })
 
