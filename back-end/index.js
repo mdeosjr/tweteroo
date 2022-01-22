@@ -18,15 +18,17 @@ server.post('/sign-up', (req, res) => {
 })
 
 server.post('/tweets', (req, res) => {
-    console.log(req.body)
-    if (req.body.username === "" || req.body.tweet === "") {
+    const tweet = req.body.tweet;
+    const username = req.headers.user;
+   
+    if (tweet === "" || username === "") {
         res.status(400).send("Todos os campos são obrigatórios!")
     } else {
         if (tweets.length < 10) {
-            tweets.unshift({...req.body, avatar: user.avatar});
+            tweets.unshift({username, avatar: user.avatar, tweet});
         } else {
             tweets.pop();
-            tweets.unshift({...req.body, avatar: user.avatar});
+            tweets.unshift({username, avatar: user.avatar, tweet});
         }
         res.status(201).send("OK")
     }
