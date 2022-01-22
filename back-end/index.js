@@ -38,4 +38,10 @@ server.get('/tweets', (req, res) => {
     res.send(tweets)
 })
 
+server.get('/tweets/:username', (req, res) => {
+    const username = req.params.username;
+    const userTweets = tweets.filter(tweet => tweet.username === username);
+    res.send(userTweets)
+})
+
 server.listen(5000);
